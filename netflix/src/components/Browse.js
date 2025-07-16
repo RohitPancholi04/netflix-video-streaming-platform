@@ -15,7 +15,7 @@ const Browse = () => {
     const toggle = useSelector(store => store.movie.toggle);
     const navigate = useNavigate();
 
-    // my custom hooks
+
     useNowPlayingMovies();
     usePopularMovies();
     useTopRatedMovies();
@@ -25,7 +25,7 @@ const Browse = () => {
         if (!user) {
             navigate("/");
         }
-    }, []);
+    }, [navigate, user]);
     return (
         <div >
             <Header />

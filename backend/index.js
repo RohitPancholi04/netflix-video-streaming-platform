@@ -1,32 +1,28 @@
-//step-1
-// const express = require("express");
 import express from "express";
-import dotenv from "dotenv";
-import databaseConnection from "./utils/database.js";
-import cookieParser from "cookie-parser";
-import userRoute from "./routes/userRoute.js";
 import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import databaseConnection from "./utils/database.js";
+import userRoute from "./routes/userRoute.js";
 
-databaseConnection();
-
-dotenv.config({
-    path:".env"
-})
+dotenv.config({ path: ".env" });
 
 const app = express();
-//middlewares 
-app.use(express.urlencoded({extended:true}));
+databaseConnection();
+
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const corsOptions = {
-    origin:'http://localhost:3000',
-    credentials:true
-}
-app.use(cors(corsOptions));
- 
-// api
+
 app.use("/api/v1/user", userRoute);
 
-app.listen(process.env.PORT,() => {
-    console.log(`Server listen at port ${process.env.PORT}`);
+
+app.listen(process.env.PORT, () => {
+  console.log(`✅ Server listening on port ${process.env.PORT}`);
 });
